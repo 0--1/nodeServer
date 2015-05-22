@@ -5,7 +5,6 @@ var cluster = require('cluster'),
 	numWorkers = CONFIG.app.numWorkers,
 	app = require('./lib/app.js'),
 	router = require('./lib/routes.js'),
-	db = require('./lib/db.js'),
 	authenticator = require('./lib/authenticator.js'),
 	errorGenerator = require('./lib/error.js'),
 	server;
@@ -38,7 +37,7 @@ if(cluster.isMaster) {
 	app.use('/api/pronto/', router);
 
 	// if no route is matched, respond 404
-	app.use(function(req, res, next) {
+	app.use(function(req, res) {
 		var error = errorGenerator(404, 'Requested API is not found');
 		res.status(404).json(error).end();
 	});

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var authExemptRoutes = [
 	{method: 'POST', url: '/api/pronto/login'}

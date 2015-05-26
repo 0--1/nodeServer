@@ -1,20 +1,21 @@
 {
-	"name": "nodeServer",
-	"version": "0.0.1",
-	"description": "Node.js generic server",
-	"main": "index.js",
-	"scripts": {
-		"start": "jshint . && node --harmony index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Behrooz Kamali",
-	"license": "MIT",
-	"dependencies": {
-		"body-parser": "^1.12.4",
-		"express": "^4.12.3",
-		"jshint": "^2.7.0",
-		"jwt-simple": "^0.3.0",
-		"morgan": "^1.5.3",
-		"mysql": "^2.6.2"
-	}
+  "name": "nodeServer",
+  "version": "0.0.1",
+  "description": "Node.js generic server",
+  "main": "index.js",
+  "scripts": {
+    "start": "jshint . && node --harmony index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Behrooz Kamali",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "compression": "^1.4.4",
+    "express": "^4.12.3",
+    "jshint": "^2.7.0",
+    "jwt-simple": "^0.3.0",
+    "morgan": "^1.5.3",
+    "mysql": "^2.6.2"
+  }
 }

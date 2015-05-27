@@ -8,6 +8,7 @@ var cluster = require('cluster'),
 	authenticator = require('./lib/authenticator.js'),
 	errorGenerator = require('./lib/error.js'),
 	envVariables = require('./lib/env.js'),
+	logger = require('./lib/logger.js'),
 	server;
 
 if(cluster.isMaster) {
@@ -15,7 +16,7 @@ if(cluster.isMaster) {
 	envVariables.setDefaultValues();
 
 	var i, worker, workers = [];
-	console.log((new Date()).toISOString() + ': Master cluster setting up ' + numWorkers + ' workers...');
+	logger.write((new Date()).toISOString() + ': Master cluster setting up ' + numWorkers + ' workers...');
 
 	for(i = 0; i < numWorkers; i++) {
 		worker = cluster.fork();
@@ -23,12 +24,12 @@ if(cluster.isMaster) {
 	}
 
 	cluster.on('online', function(_worker) {
-		console.log((new Date()).toISOString() + ': Worker ' + _worker.process.pid + ' is online');
+		logger.write((new Date()).toISOString() + ': Worker ' + _worker.process.pid + ' is online');
 	});
 
 	cluster.on('exit', function(_worker, code, signal) {
-		console.log((new Date()).toISOString() + ': Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-		console.log((new Date()).toISOString() + ': Starting a new worker');
+		logger.error((new Date()).toISOString() + ': Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+		logger.write((new Date()).toISOString() + ': Starting a new worker');
 		delete workers[_worker.process.pid];
 		worker = cluster.fork();
 		workers[worker.process.pid] = worker;
@@ -47,6 +48,6 @@ if(cluster.isMaster) {
 	});
 
 	server = app.listen(CONFIG.app.port, CONFIG.app.ip, function() {
-		console.log((new Date()).toISOString() + ': Process ' + process.pid + ' is listening to ' + server.address().address + ':' + server.address().port);
+		logger.success((new Date()).toISOString() + ': Process ' + process.pid + ' is listening to ' + server.address().address + ':' + server.address().port);
 	});
 }

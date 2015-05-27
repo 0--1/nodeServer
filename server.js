@@ -7,7 +7,7 @@ var cluster = require('cluster'),
 	router = require('./lib/routes.js'),
 	authenticator = require('./lib/authenticator.js'),
 	errorGenerator = require('./lib/error.js'),
-	envVariables = require('./config/env_vars.js'),
+	envVariables = require('./lib/env.js'),
 	server;
 
 if(cluster.isMaster) {

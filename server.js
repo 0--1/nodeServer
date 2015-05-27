@@ -30,6 +30,8 @@ if(cluster.isMaster) {
 		workers[worker.process.pid] = worker;
 	});
 } else if (cluster.isWorker) {
+	console.log(process.argv);
+	// console.log(process.env.X_PRODUCTION);
 	// authentication middleware
 	app.all('/api/pronto/*', authenticator);
 

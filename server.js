@@ -7,9 +7,13 @@ var cluster = require('cluster'),
 	router = require('./lib/routes.js'),
 	authenticator = require('./lib/authenticator.js'),
 	errorGenerator = require('./lib/error.js'),
+	envVariables = require('./config/env_vars.js'),
 	server;
 
 if(cluster.isMaster) {
+	// set up default environment variables and process arguments
+	envVariables.setDefaultValues();
+
 	var i, worker, workers = [];
 	console.log((new Date()).toISOString() + ': Master cluster setting up ' + numWorkers + ' workers...');
 
@@ -30,8 +34,6 @@ if(cluster.isMaster) {
 		workers[worker.process.pid] = worker;
 	});
 } else if (cluster.isWorker) {
-	console.log(process.argv);
-	// console.log(process.env.X_PRODUCTION);
 	// authentication middleware
 	app.all('/api/pronto/*', authenticator);
 
